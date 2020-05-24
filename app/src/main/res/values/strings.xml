@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Stock Monitor</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="watchlist_empty">You are not watching any stocks at the moment</string>
+</resources>
