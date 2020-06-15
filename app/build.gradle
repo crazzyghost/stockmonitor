@@ -40,17 +40,18 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7'
     implementation "androidx.appcompat:appcompat:$androidx_version"
-    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation 'androidx.core:core-ktx:1.3.0'
     implementation "com.google.android.material:material:$androidx_version"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation "androidx.vectordrawable:vectordrawable:$androidx_version"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'com.github.crazzyghost:alphavantage-java:1.3.2'
+    implementation 'com.github.crazzyghost:alphavantage-java:1.4.0'
     implementation "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     releaseImplementation "io.objectbox:objectbox-android:$objectbox_version"
     kapt "io.objectbox:objectbox-processor:$objectbox_version"
     implementation "io.objectbox:objectbox-kotlin:$objectbox_version"
+    implementation "com.squareup.okhttp3:okhttp:4.7.2"
     debugImplementation "io.objectbox:objectbox-android-objectbrowser:$objectbox_version"
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

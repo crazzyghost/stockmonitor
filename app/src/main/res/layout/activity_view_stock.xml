@@ -1,6 +1,319 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:padding="16dp"
+        android:background="@drawable/gradient_background">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/companySymbolTv"
+                android:text="APPL"
+                android:textColor="#FFF"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:fontFamily="@font/montserrat_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/companySymbolTv"
+                android:id="@+id/companyNameTv"
+                android:text="Apple Inc."
+                android:textColor="#FFCFCFCF"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:text="$"
+                android:textStyle="bold"
+                android:textColor="#FFF"
+                android:textSize="10dp"
+                android:paddingRight="4dp"
+                app:layout_constraintRight_toLeftOf="@id/bannerHighTv"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/bannerHighTv"
+                android:text="00.00"
+                android:textStyle="bold"
+                android:textColor="#FFF"
+                android:textSize="16dp"
+                android:fontFamily="@font/montserrat_bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/percentChangeTv"
+                android:textColor="#FFF"
+                android:textSize="12sp"
+                android:padding="8dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bannerHighTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+
+    <LinearLayout
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="300dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/curved_background" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/previous_close_label"
+                android:layout_marginTop="16dp"
+                android:padding="16dp"
+                android:text="Previous Close"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:text="$"
+                android:paddingTop="16dp"
+                android:textSize="10dp"
+                app:layout_constraintTop_toTopOf="@id/previousCloseTv"
+                app:layout_constraintStart_toStartOf="@id/previousCloseTv"
+                app:layout_constraintRight_toLeftOf="@id/previousCloseTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/previousCloseTv"
+                android:layout_marginTop="16dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="00.00"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <View
+                app:layout_constraintTop_toBottomOf="@id/previous_close_label"
+                android:layout_width="match_parent"
+                android:background="#FFcfcfcf"
+                android:layout_height="1dp"/>
+
+            <TextView
+                android:id="@+id/open_label"
+                android:padding="16dp"
+                android:text="Open"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/previous_close_label"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:text="$"
+                android:paddingTop="16dp"
+                android:textSize="10dp"
+                app:layout_constraintTop_toTopOf="@id/openTv"
+                app:layout_constraintStart_toStartOf="@id/openTv"
+                app:layout_constraintRight_toLeftOf="@id/openTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/openTv"
+                android:paddingLeft="10dp"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="00.00"
+                app:layout_constraintTop_toBottomOf="@id/previousCloseTv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <View
+                app:layout_constraintTop_toBottomOf="@id/open_label"
+                android:layout_width="match_parent"
+                android:background="#FFcfcfcf"
+                android:layout_height="1dp"/>
+
+            <TextView
+                android:id="@+id/high_label"
+                android:padding="16dp"
+                android:text="Today's High"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/open_label"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:text="$"
+                android:paddingTop="16dp"
+                android:textSize="10dp"
+                app:layout_constraintTop_toTopOf="@id/highTv"
+                app:layout_constraintStart_toStartOf="@id/highTv"
+                app:layout_constraintRight_toLeftOf="@id/highTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/highTv"
+                android:paddingLeft="10dp"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="00.00"
+                app:layout_constraintTop_toBottomOf="@id/openTv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <View
+                app:layout_constraintTop_toBottomOf="@id/high_label"
+                android:layout_width="match_parent"
+                android:background="#FFcfcfcf"
+                android:layout_height="1dp"/>
+
+            <TextView
+                android:id="@+id/low_label"
+                android:padding="16dp"
+                android:text="Today's Low"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/high_label"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:text="$"
+                android:paddingTop="16dp"
+                android:textSize="10dp"
+                app:layout_constraintTop_toTopOf="@id/lowTv"
+                app:layout_constraintStart_toStartOf="@id/lowTv"
+                app:layout_constraintRight_toLeftOf="@id/lowTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/lowTv"
+                android:paddingLeft="10dp"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="00.00"
+                app:layout_constraintTop_toBottomOf="@id/highTv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <View
+                app:layout_constraintTop_toBottomOf="@id/low_label"
+                android:layout_width="match_parent"
+                android:background="#FFcfcfcf"
+                android:layout_height="1dp"/>
+
+            <TextView
+                android:id="@+id/volume_label"
+                android:padding="16dp"
+                android:text="Volume"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/low_label"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:text="$"
+                android:paddingTop="16dp"
+                android:textSize="10dp"
+                app:layout_constraintTop_toTopOf="@id/volumeTv"
+                app:layout_constraintStart_toStartOf="@id/volumeTv"
+                app:layout_constraintRight_toLeftOf="@id/volumeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/volumeTv"
+                android:paddingLeft="10dp"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="00.00"
+                app:layout_constraintTop_toBottomOf="@id/lowTv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+    <ProgressBar
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="150dp"
+        android:tint="#FFFFFFFF"
+        android:id="@+id/progressBar"
+        android:layout_width="16dp"
+        android:layout_height="16dp"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="24dp"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/ic_plus"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

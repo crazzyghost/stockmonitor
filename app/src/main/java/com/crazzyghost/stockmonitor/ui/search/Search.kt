@@ -73,6 +73,8 @@ class Search : AppCompatActivity(), SearchContract.View, CoroutineScope {
                 val intent = Intent(this@Search, ViewStock::class.java)
                 intent.putExtra(Constants.EXTRA_STOCK_NAME, company.name)
                 intent.putExtra(Constants.EXTRA_STOCK_SYMBOL, company.symbol)
+                startActivity(intent)
+                finish()
             }
             override fun onLongClick(view: View?, position: Int) = Unit
         }))
