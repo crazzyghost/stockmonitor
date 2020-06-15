@@ -74,7 +74,6 @@ class Search : AppCompatActivity(), SearchContract.View, CoroutineScope {
                 intent.putExtra(Constants.EXTRA_STOCK_NAME, company.name)
                 intent.putExtra(Constants.EXTRA_STOCK_SYMBOL, company.symbol)
                 startActivity(intent)
-                finish()
             }
             override fun onLongClick(view: View?, position: Int) = Unit
         }))
