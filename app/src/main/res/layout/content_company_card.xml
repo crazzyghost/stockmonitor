@@ -6,25 +6,28 @@
     android:layout_width="match_parent"
     android:layout_height="80dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
     <LinearLayout
         android:id="@+id/cardLayout"
-        android:orientation="vertical"
-        android:padding="10dp"
-        android:background="@drawable/stock_card_background"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/background_stock_card"
+        android:orientation="vertical"
+        android:padding="10dp">
+
         <TextView
             android:id="@+id/companySymbolTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="AAPL"
-            android:textStyle="bold"
-            android:textSize="24sp"/>
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/companyNameTv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Apple Inc."
-            android:textSize="12sp"/>
+            android:textSize="12sp" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -12,7 +12,9 @@ import io.objectbox.kotlin.query
 import javax.inject.Inject
 
 @ActivityScope
-class SearchPresenter @Inject constructor(private var database: DatabaseManager): SearchContract.Presenter {
+class SearchPresenter @Inject constructor(
+    private var database: DatabaseManager
+): SearchContract.Presenter {
 
     var view: SearchContract.View? = null
     private val companies = ArrayList<Company>()

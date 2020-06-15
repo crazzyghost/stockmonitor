@@ -60,4 +60,11 @@ class AppDatabaseManager @Inject constructor(private var context : Context, priv
         }
     }
 
+    override fun addToWatchList(company: Company) {
+
+    }
+
+    override fun removeFromWatchList(company: Company) {
+
+    }
 }

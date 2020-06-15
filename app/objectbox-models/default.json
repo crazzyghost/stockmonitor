@@ -26,9 +26,69 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "2:1170991344858540834",
+      "lastPropertyId": "9:1778818965203034550",
+      "name": "WatchListItem",
+      "properties": [
+        {
+          "id": "1:595521952306541987",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6632653583952099342",
+          "name": "symbol",
+          "type": 9
+        },
+        {
+          "id": "3:8082237544340242243",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "4:5939648681572046758",
+          "name": "previousClose",
+          "type": 8,
+          "flags": 2
+        },
+        {
+          "id": "5:5703617486889477876",
+          "name": "open",
+          "type": 8,
+          "flags": 2
+        },
+        {
+          "id": "6:6501482951759762201",
+          "name": "high",
+          "type": 8,
+          "flags": 2
+        },
+        {
+          "id": "7:4842793670412605102",
+          "name": "low",
+          "type": 8,
+          "flags": 2
+        },
+        {
+          "id": "8:8918424072536006465",
+          "name": "volume",
+          "type": 8,
+          "flags": 2
+        },
+        {
+          "id": "9:1778818965203034550",
+          "name": "change",
+          "type": 8,
+          "flags": 2
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "1:7540704999309863344",
+  "lastEntityId": "2:1170991344858540834",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

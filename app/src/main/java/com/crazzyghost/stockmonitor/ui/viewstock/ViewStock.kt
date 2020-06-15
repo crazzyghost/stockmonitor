@@ -1,6 +1,5 @@
 package com.crazzyghost.stockmonitor.ui.viewstock
 
-import android.R.attr.entries
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View.GONE
@@ -10,9 +9,9 @@ import com.crazzyghost.alphavantage.timeseries.response.QuoteResponse
 import com.crazzyghost.alphavantage.timeseries.response.TimeSeriesResponse
 import com.crazzyghost.stockmonitor.R
 import com.crazzyghost.stockmonitor.app.App
+import com.crazzyghost.stockmonitor.data.models.Company
 import com.crazzyghost.stockmonitor.util.Constants.EXTRA_STOCK_NAME
 import com.crazzyghost.stockmonitor.util.Constants.EXTRA_STOCK_SYMBOL
-import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -28,6 +27,7 @@ class ViewStock : AppCompatActivity(), ViewStockContract.View {
     lateinit var component: ViewStockComponent
     var name: String? = ""
     var symbol: String? = ""
+    private val fmt = DecimalFormat("#,###0.00")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +56,10 @@ class ViewStock : AppCompatActivity(), ViewStockContract.View {
         graph.legend.isEnabled = false
         graph.description.isEnabled = false
         graph.fitScreen()
+
+        addBtn.setOnClickListener {
+            presenter.addToWatchList(Company(name = name, symbol = symbol))
+        }
     }
 
     override fun onResume() {
@@ -70,7 +74,6 @@ class ViewStock : AppCompatActivity(), ViewStockContract.View {
 
     override fun onQuoteResult(response: QuoteResponse) {
         if(response.errorMessage == null){
-            val fmt = DecimalFormat("#,###0.00")
             previousCloseTv.text = fmt.format(response.previousClose)
             openTv.text = fmt.format(response.open)
             highTv.text = fmt.format(response.high)
@@ -93,7 +96,6 @@ class ViewStock : AppCompatActivity(), ViewStockContract.View {
     override fun onTimeSeriesResult(response: TimeSeriesResponse) {
         progressBar.visibility = GONE
         if(response.errorMessage == null){
-
             val entries = mutableListOf<Entry>()
             for(i in 0 until response.stockUnits.size){
                 entries.add(Entry(i.toFloat(), response.stockUnits[i].high.toFloat()))
@@ -110,5 +112,18 @@ class ViewStock : AppCompatActivity(), ViewStockContract.View {
         }else{
             Toast.makeText(this, response.errorMessage, Toast.LENGTH_LONG).show()
         }
+    }
+
+    override fun onItemAddedToWatchList(status: Boolean) {
+        val state = if (status) " " else " not "
+        Toast.makeText(this, "Item" + state + "added to watchlist", Toast.LENGTH_LONG).show()
+    }
+
+    override fun onWatchListItemsExceeded() {
+        Toast.makeText(this, "You can only watch up to 5 companies", Toast.LENGTH_LONG).show()
+    }
+
+    override fun onItemInWatchList() {
+        Toast.makeText(this, "You are watching this item", Toast.LENGTH_LONG).show()
     }
 }

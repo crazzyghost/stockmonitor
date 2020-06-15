@@ -12,7 +12,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_width="match_parent"
         android:layout_height="290dp"
-        android:background="@drawable/gradient_background"/>
+        android:background="@drawable/background_gradient"/>
 
     <TextView
         android:id="@+id/dateTv"
