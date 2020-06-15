@@ -52,6 +52,8 @@ dependencies {
     kapt "io.objectbox:objectbox-processor:$objectbox_version"
     implementation "io.objectbox:objectbox-kotlin:$objectbox_version"
     implementation "com.squareup.okhttp3:okhttp:4.7.2"
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+
     debugImplementation "io.objectbox:objectbox-android-objectbrowser:$objectbox_version"
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
