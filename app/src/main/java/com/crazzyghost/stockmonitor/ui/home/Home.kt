@@ -5,10 +5,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.crazzyghost.stockmonitor.R
-import com.crazzyghost.stockmonitor.adapter.CompanyListAdapter
 import com.crazzyghost.stockmonitor.adapter.WatchListAdapter
 import com.crazzyghost.stockmonitor.app.App
 import com.crazzyghost.stockmonitor.data.models.WatchListItem
@@ -17,8 +17,8 @@ import com.crazzyghost.stockmonitor.ui.viewstock.ViewStock
 import com.crazzyghost.stockmonitor.util.ClickListener
 import com.crazzyghost.stockmonitor.util.Constants
 import com.crazzyghost.stockmonitor.util.ItemTouchListener
+import com.crazzyghost.stockmonitor.util.SwipeToDeleteCallback
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.activity_search.*
 import javax.inject.Inject
 
 class Home : AppCompatActivity(), HomeContract.View {
@@ -79,6 +79,14 @@ class Home : AppCompatActivity(), HomeContract.View {
             override fun onLongClick(view: View?, position: Int) = Unit
         }))
 
+        val handler = object : SwipeToDeleteCallback(this) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val item = viewAdapter.get(viewHolder.adapterPosition)
+                presenter.deleteItem(item, viewHolder.adapterPosition)
+                return
+            }
+        }
+        ItemTouchHelper(handler).attachToRecyclerView(watchListRv)
     }
 
     override fun onWatchListItems(items: List<WatchListItem>){
@@ -90,6 +98,14 @@ class Home : AppCompatActivity(), HomeContract.View {
             viewAdapter.updateList(items)
             viewAdapter.notifyDataSetChanged()
         }else{
+            emptyWatchlistTv.visibility = View.VISIBLE
+        }
+    }
+
+    override fun onItemDeleted(adapterPosition: Int) {
+        viewAdapter.delete(adapterPosition)
+        viewAdapter.notifyItemRemoved(adapterPosition)
+        if(viewAdapter.itemCount == 0) {
             emptyWatchlistTv.visibility = View.VISIBLE
         }
     }

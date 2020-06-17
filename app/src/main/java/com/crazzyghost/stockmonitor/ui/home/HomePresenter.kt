@@ -5,6 +5,7 @@ import com.crazzyghost.stockmonitor.app.ThreadPoolManager
 import com.crazzyghost.stockmonitor.data.AppDatabaseManager
 import com.crazzyghost.stockmonitor.data.DatabaseManager
 import com.crazzyghost.stockmonitor.data.models.WatchListItem
+import com.crazzyghost.stockmonitor.data.models.WatchListItem_
 import io.objectbox.Box
 import io.objectbox.kotlin.boxFor
 import javax.inject.Inject
@@ -34,4 +35,21 @@ class HomePresenter @Inject constructor(
             }
         }
     }
+
+    override fun deleteItem(item: WatchListItem, adapterPosition: Int) {
+        executors.diskIO().execute {
+            val box: Box<WatchListItem> = (database as AppDatabaseManager).boxStore.boxFor()
+            box.query()
+                .equal(WatchListItem_.name, item.name)
+                .and()
+                .equal(WatchListItem_.symbol, item.symbol)
+                .build()
+                .remove()
+
+            executors.main().execute {
+                view?.onItemDeleted(adapterPosition)
+            }
+        }
+    }
+
 }

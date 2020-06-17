@@ -27,7 +27,7 @@ class ViewStock : AppCompatActivity(), ViewStockContract.View {
     lateinit var component: ViewStockComponent
     var name: String? = ""
     var symbol: String? = ""
-    private val fmt = DecimalFormat("#,###0.00")
+    private val fmt = DecimalFormat("#,###.00")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +40,7 @@ class ViewStock : AppCompatActivity(), ViewStockContract.View {
     }
 
     private fun initUi(){
-        presenter.fetchDaily(symbol)
+        presenter.fetchIntraday(symbol)
         presenter.fetchQuote(symbol)
 
         companyNameTv.text = name
@@ -104,8 +104,8 @@ class ViewStock : AppCompatActivity(), ViewStockContract.View {
         progressBar.visibility = GONE
         if(response.errorMessage == null){
             val entries = mutableListOf<Entry>()
-            for(i in 0 until response.stockUnits.size){
-                entries.add(Entry(i.toFloat(), response.stockUnits[i].high.toFloat()))
+            for(i in (response.stockUnits.size - 1) downTo 0 ){
+                entries.add(Entry((response.stockUnits.size - i).toFloat(), response.stockUnits[i].high.toFloat()))
             }
             val dataSet = LineDataSet(entries, "")
             dataSet.lineWidth = 1f

@@ -169,7 +169,6 @@ class ViewStockPresenter @Inject constructor(
                 item.change = quote?.changePercent
                 box.put(item)
             }
-
         }
     }
 

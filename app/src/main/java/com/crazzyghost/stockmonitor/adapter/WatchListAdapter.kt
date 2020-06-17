@@ -14,11 +14,12 @@ import kotlinx.android.synthetic.main.content_watch_list_item_card.view.companyS
 import kotlinx.android.synthetic.main.content_watch_list_item_card.view.highTv
 import kotlinx.android.synthetic.main.content_watch_list_item_card.view.percentChangeTv
 import java.text.DecimalFormat
+import java.util.ArrayList
 
 
 class WatchListAdapter(private var watchListItems: List<WatchListItem>): RecyclerView.Adapter<WatchListAdapter.ViewHolder>() {
 
-    private val fmt = DecimalFormat("#,###0.00")
+    private val fmt = DecimalFormat("#,###.00")
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.content_watch_list_item_card, parent, false)
@@ -51,6 +52,9 @@ class WatchListAdapter(private var watchListItems: List<WatchListItem>): Recycle
 
     fun get(position: Int): WatchListItem = watchListItems[position]
 
+    fun delete(position: Int) {
+        (watchListItems as ArrayList).removeAt(position)
+    }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
