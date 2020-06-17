@@ -46,12 +46,14 @@ class ViewStock : AppCompatActivity(), ViewStockContract.View {
         companyNameTv.text = name
         companySymbolTv.text = symbol
         graph.setNoDataText("")
+        graph.setPinchZoom(true)
         graph.axisRight.isEnabled = false
         graph.axisLeft.isEnabled = true
         graph.axisLeft.axisLineColor = Color.parseColor("#FFFFFFFF")
         graph.axisLeft.setDrawAxisLine(false)
-        graph.axisLeft.setDrawTopYLabelEntry(true)
+        graph.axisLeft.setDrawTopYLabelEntry(false)
         graph.axisLeft.setDrawLabels(false)
+        graph.xAxis.setDrawLabels(false)
         graph.xAxis.isEnabled = false
         graph.legend.isEnabled = false
         graph.description.isEnabled = false
@@ -87,9 +89,14 @@ class ViewStock : AppCompatActivity(), ViewStockContract.View {
                 R.drawable.background_positive_change else R.drawable.background_negative_change
 
             percentChangeTv.setBackgroundResource(resource)
+
+            presenter.updateIfInWatchList(Company(name = name, symbol = symbol))
+
         }else{
             Toast.makeText(this, response.errorMessage, Toast.LENGTH_LONG).show()
         }
+
+
 
     }
 
@@ -103,6 +110,7 @@ class ViewStock : AppCompatActivity(), ViewStockContract.View {
             val dataSet = LineDataSet(entries, "")
             dataSet.lineWidth = 1f
             dataSet.setDrawCircles(false)
+            dataSet.setDrawValues(false)
             dataSet.resetColors()
             dataSet.color = Color.parseColor("#FFFFFFFF")
             dataSet.mode = LineDataSet.Mode.CUBIC_BEZIER

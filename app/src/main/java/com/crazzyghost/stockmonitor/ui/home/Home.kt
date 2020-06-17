@@ -47,6 +47,7 @@ class Home : AppCompatActivity(), HomeContract.View {
     override fun onPause() {
         super.onPause()
         presenter.drop()
+        println("onpause")
     }
 
     private fun initUi(){
@@ -87,6 +88,7 @@ class Home : AppCompatActivity(), HomeContract.View {
             watchListTv.visibility = View.VISIBLE
             emptyWatchlistTv.visibility = View.GONE
             viewAdapter.updateList(items)
+            viewAdapter.notifyDataSetChanged()
         }else{
             emptyWatchlistTv.visibility = View.VISIBLE
         }

@@ -16,6 +16,7 @@ interface ViewStockContract {
         fun fetchDaily(symbol: String?)
         fun fetchQuote(symbol: String?)
         fun addToWatchList(company: Company)
+        fun updateIfInWatchList(company: Company)
     }
 
     interface View: BaseView {

@@ -150,4 +150,27 @@ class ViewStockPresenter @Inject constructor(
         println(exception.message)
     }
 
+    override fun updateIfInWatchList(company: Company){
+        if(itemInWatchList(company)){
+            executors.diskIO().execute {
+                val box: Box<WatchListItem> = (database as AppDatabaseManager).boxStore.boxFor()
+                val item = box.query()
+                    .equal(WatchListItem_.name, company.name)
+                    .and()
+                    .equal(WatchListItem_.symbol, company.symbol)
+                    .build()
+                    .findFirst()
+
+                item!!.previousClose = quote?.previousClose
+                item.open = quote?.open
+                item.high = quote?.high
+                item.low = quote?.low
+                item.volume = quote?.volume
+                item.change = quote?.changePercent
+                box.put(item)
+            }
+
+        }
+    }
+
 }
