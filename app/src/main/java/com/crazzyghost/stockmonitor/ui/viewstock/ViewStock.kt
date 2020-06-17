@@ -27,7 +27,7 @@ class ViewStock : AppCompatActivity(), ViewStockContract.View {
     lateinit var component: ViewStockComponent
     var name: String? = ""
     var symbol: String? = ""
-    private val fmt = DecimalFormat("#,###.00")
+    private val fmt = DecimalFormat("#,##0.00")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

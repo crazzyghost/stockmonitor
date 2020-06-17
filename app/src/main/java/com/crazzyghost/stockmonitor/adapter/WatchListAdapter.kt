@@ -19,7 +19,7 @@ import java.util.ArrayList
 
 class WatchListAdapter(private var watchListItems: List<WatchListItem>): RecyclerView.Adapter<WatchListAdapter.ViewHolder>() {
 
-    private val fmt = DecimalFormat("#,###.00")
+    private val fmt = DecimalFormat("#,##0.00")
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.content_watch_list_item_card, parent, false)

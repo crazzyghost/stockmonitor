@@ -107,6 +107,8 @@ class Home : AppCompatActivity(), HomeContract.View {
         viewAdapter.notifyItemRemoved(adapterPosition)
         if(viewAdapter.itemCount == 0) {
             emptyWatchlistTv.visibility = View.VISIBLE
+            watchListTv.visibility = View.GONE
+            watchListRv.visibility = View.GONE
         }
     }
 }
