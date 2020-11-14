@@ -1,6 +1,6 @@
 package com.crazzyghost.stockmonitor.ui.search
 
-import com.crazzyghost.stockmonitor.data.DatabaseManager
+import com.crazzyghost.stockmonitor.data.repo.CompanyRepository
 import dagger.Module
 import dagger.Provides
 
@@ -8,7 +8,7 @@ import dagger.Provides
 class SearchModule {
 
     @Provides
-    fun presenter(database: DatabaseManager) : SearchContract.Presenter{
-        return SearchPresenter(database)
+    fun presenter(repository: CompanyRepository) : SearchContract.Presenter{
+        return SearchPresenter(repository)
     }
 }
