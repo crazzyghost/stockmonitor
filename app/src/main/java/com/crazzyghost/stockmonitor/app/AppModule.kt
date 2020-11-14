@@ -12,15 +12,11 @@ import javax.inject.Singleton
 @Module
 class AppModule constructor(private val app: Application){
 
-    @Provides
-    @Singleton
-    fun provideThreadPool(): ThreadPoolManager = AppExecutors()
 
     @Provides
     @Singleton
     @ApplicationContext
     fun provideContext(): Context = app.applicationContext
-
 
     @Provides
     @Singleton

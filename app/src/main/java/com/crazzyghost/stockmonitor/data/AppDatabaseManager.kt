@@ -3,7 +3,6 @@ package com.crazzyghost.stockmonitor.data
 import android.content.Context
 import android.util.Log
 import com.crazzyghost.stockmonitor.BuildConfig
-import com.crazzyghost.stockmonitor.app.ThreadPoolManager
 import com.crazzyghost.stockmonitor.data.models.Company
 import com.crazzyghost.stockmonitor.data.models.MyObjectBox
 import io.objectbox.Box
@@ -13,7 +12,6 @@ import io.objectbox.kotlin.boxFor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.lang.IndexOutOfBoundsException
 import javax.inject.Inject
 
 
