@@ -58,6 +58,19 @@ class WatchListRepository @Inject constructor(database: DatabaseManager){
         return find(company) != null
     }
 
+    fun all() : List<WatchListItem> {
+        return box.all
+    }
+
+    fun delete(item: WatchListItem) {
+        box.query()
+            .equal(WatchListItem_.name, item.name)
+            .and()
+            .equal(WatchListItem_.symbol, item.symbol)
+            .build()
+            .remove()
+    }
+
     fun getQuote(
         symbol: String?,
         onSuccessCallback: Fetcher.SuccessCallback<QuoteResponse>,

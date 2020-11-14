@@ -1,7 +1,6 @@
 package com.crazzyghost.stockmonitor.ui.home
 
-import com.crazzyghost.stockmonitor.app.ThreadPoolManager
-import com.crazzyghost.stockmonitor.data.DatabaseManager
+import com.crazzyghost.stockmonitor.data.repo.WatchListRepository
 import dagger.Module
 import dagger.Provides
 
@@ -9,7 +8,7 @@ import dagger.Provides
 class HomeModule {
 
     @Provides
-    fun presenter(executors: ThreadPoolManager, database: DatabaseManager) : HomeContract.Presenter {
-        return HomePresenter(executors, database)
+    fun presenter(repository: WatchListRepository) : HomeContract.Presenter {
+        return HomePresenter(repository)
     }
 }

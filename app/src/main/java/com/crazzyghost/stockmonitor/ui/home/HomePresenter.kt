@@ -1,19 +1,16 @@
 package com.crazzyghost.stockmonitor.ui.home
 
 import com.crazzyghost.stockmonitor.annotations.ActivityScope
-import com.crazzyghost.stockmonitor.app.ThreadPoolManager
-import com.crazzyghost.stockmonitor.data.AppDatabaseManager
-import com.crazzyghost.stockmonitor.data.DatabaseManager
 import com.crazzyghost.stockmonitor.data.models.WatchListItem
-import com.crazzyghost.stockmonitor.data.models.WatchListItem_
-import io.objectbox.Box
-import io.objectbox.kotlin.boxFor
+import com.crazzyghost.stockmonitor.data.repo.WatchListRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @ActivityScope
 class HomePresenter @Inject constructor(
-    private var executors: ThreadPoolManager,
-    private var database: DatabaseManager
+    private var repository: WatchListRepository
 ) : HomeContract.Presenter {
 
     private var view: HomeContract.View? = null
@@ -27,26 +24,18 @@ class HomePresenter @Inject constructor(
     }
 
     override fun getWatchListItems() {
-        executors.diskIO().execute {
-            val box: Box<WatchListItem> = (database as AppDatabaseManager).boxStore.boxFor()
-            val list = box.all
-            executors.main().execute{
+        GlobalScope.launch(Dispatchers.IO) {
+            val list = repository.all()
+            launch(Dispatchers.Main){
                 view?.onWatchListItems(list)
             }
         }
     }
 
     override fun deleteItem(item: WatchListItem, adapterPosition: Int) {
-        executors.diskIO().execute {
-            val box: Box<WatchListItem> = (database as AppDatabaseManager).boxStore.boxFor()
-            box.query()
-                .equal(WatchListItem_.name, item.name)
-                .and()
-                .equal(WatchListItem_.symbol, item.symbol)
-                .build()
-                .remove()
-
-            executors.main().execute {
+        GlobalScope.launch(Dispatchers.IO) {
+            repository.delete(item)
+            launch(Dispatchers.Main) {
                 view?.onItemDeleted(adapterPosition)
             }
         }

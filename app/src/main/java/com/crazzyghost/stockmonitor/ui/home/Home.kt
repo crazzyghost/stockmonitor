@@ -24,7 +24,8 @@ import javax.inject.Inject
 class Home : AppCompatActivity(), HomeContract.View {
 
 
-    @Inject lateinit var presenter: HomePresenter
+    @Inject
+    lateinit var presenter: HomePresenter
     lateinit var component: HomeComponent
     lateinit var viewAdapter: WatchListAdapter
     lateinit var viewManager: LinearLayoutManager
@@ -47,7 +48,6 @@ class Home : AppCompatActivity(), HomeContract.View {
     override fun onPause() {
         super.onPause()
         presenter.drop()
-        println("onpause")
     }
 
     private fun initUi(){
