@@ -62,6 +62,8 @@ class ViewStock : AppCompatActivity(), ViewStockContract.View {
         addBtn.setOnClickListener {
             presenter.addToWatchList(Company(name = name, symbol = symbol))
         }
+        
+        backBtn.setOnClickListener { finish() }
     }
 
     override fun onResume() {
