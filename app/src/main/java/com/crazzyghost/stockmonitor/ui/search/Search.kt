@@ -101,6 +101,7 @@ class Search : AppCompatActivity(), SearchContract.View, CoroutineScope {
 
         }
         searchEt.addTextChangedListener(watcher)
+        backBtn.setOnClickListener { finish() }
     }
 
     override fun onSearchResult(list: List<Company>) {
