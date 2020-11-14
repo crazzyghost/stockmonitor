@@ -5,7 +5,6 @@ import com.crazzyghost.alphavantage.AlphaVantageException
 import com.crazzyghost.alphavantage.timeseries.response.QuoteResponse
 import com.crazzyghost.alphavantage.timeseries.response.TimeSeriesResponse
 import com.crazzyghost.stockmonitor.annotations.ActivityScope
-import com.crazzyghost.stockmonitor.app.AppExecutors
 import com.crazzyghost.stockmonitor.app.ThreadPoolManager
 import com.crazzyghost.stockmonitor.data.AppDatabaseManager
 import com.crazzyghost.stockmonitor.data.DatabaseManager
@@ -14,13 +13,13 @@ import com.crazzyghost.stockmonitor.data.models.WatchListItem
 import com.crazzyghost.stockmonitor.data.models.WatchListItem_
 import io.objectbox.Box
 import io.objectbox.kotlin.boxFor
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @ActivityScope
-class ViewStockPresenter @Inject constructor(
-    private val executors: ThreadPoolManager,
-    private var database: DatabaseManager
-): ViewStockContract.Presenter {
+class ViewStockPresenter @Inject constructor(private var database: DatabaseManager): ViewStockContract.Presenter {
 
     var view: ViewStockContract.View? = null
     private var quote: QuoteResponse? = null
@@ -94,21 +93,21 @@ class ViewStockPresenter @Inject constructor(
     }
 
     override fun addToWatchList(company: Company){
-        executors.diskIO().execute {
-            try {
 
+        GlobalScope.launch(Dispatchers.IO) {
+            try {
                 val box: Box<WatchListItem> = (database as AppDatabaseManager).boxStore.boxFor()
                 if (box.count() == 5L) {
-                    executors.main().execute {
+                    launch(Dispatchers.Main) {
                         view?.onWatchListItemsExceeded()
                     }
-                    return@execute
+                    return@launch
                 }
-                if(itemInWatchList(company)){
-                    executors.main().execute {
+                if (itemInWatchList(company)) {
+                    launch(Dispatchers.Main) {
                         view?.onItemInWatchList()
                     }
-                    return@execute
+                    return@launch
                 }
                 val item =  WatchListItem(
                     name = company.name,
@@ -121,27 +120,28 @@ class ViewStockPresenter @Inject constructor(
                     change = quote?.changePercent
                 )
                 box.put(item)
-                executors.main().execute{
+                launch(Dispatchers.Main){
                     view?.onItemAddedToWatchList(true)
                 }
+
             }catch (e: Exception){
-                executors.main().execute{
+                launch(Dispatchers.Main){
                     view?.onItemAddedToWatchList(false)
                 }
             }
-
         }
+
     }
 
     private fun onTimeSeriesResponse(response: TimeSeriesResponse){
-        executors.main().execute {
+        GlobalScope.launch(Dispatchers.Main){
             view?.onTimeSeriesResult(response)
         }
     }
 
     private fun onQuoteResponse(response: QuoteResponse){
         quote = response
-        executors.main().execute {
+        GlobalScope.launch(Dispatchers.Main){
             view?.onQuoteResult(response)
         }
     }
@@ -152,7 +152,7 @@ class ViewStockPresenter @Inject constructor(
 
     override fun updateIfInWatchList(company: Company){
         if(itemInWatchList(company)){
-            executors.diskIO().execute {
+            GlobalScope.launch(Dispatchers.IO) {
                 val box: Box<WatchListItem> = (database as AppDatabaseManager).boxStore.boxFor()
                 val item = box.query()
                     .equal(WatchListItem_.name, company.name)
