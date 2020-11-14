@@ -24,7 +24,7 @@ class AppModule constructor(private val app: Application){
 
     @Provides
     @Singleton
-    fun provideDatabaseManager(@ApplicationContext context: Context, executor: ThreadPoolManager):
-            DatabaseManager = AppDatabaseManager(context, executor)
+    fun provideDatabaseManager(@ApplicationContext context: Context):
+            DatabaseManager = AppDatabaseManager(context)
 
 }

@@ -5,21 +5,17 @@ import com.crazzyghost.alphavantage.AlphaVantageException
 import com.crazzyghost.alphavantage.timeseries.response.QuoteResponse
 import com.crazzyghost.alphavantage.timeseries.response.TimeSeriesResponse
 import com.crazzyghost.stockmonitor.annotations.ActivityScope
-import com.crazzyghost.stockmonitor.app.ThreadPoolManager
-import com.crazzyghost.stockmonitor.data.AppDatabaseManager
-import com.crazzyghost.stockmonitor.data.DatabaseManager
 import com.crazzyghost.stockmonitor.data.models.Company
-import com.crazzyghost.stockmonitor.data.models.WatchListItem
-import com.crazzyghost.stockmonitor.data.models.WatchListItem_
-import io.objectbox.Box
-import io.objectbox.kotlin.boxFor
+import com.crazzyghost.stockmonitor.data.repo.WatchListRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @ActivityScope
-class ViewStockPresenter @Inject constructor(private var database: DatabaseManager): ViewStockContract.Presenter {
+class ViewStockPresenter @Inject constructor(
+    private var repository: WatchListRepository
+): ViewStockContract.Presenter {
 
     var view: ViewStockContract.View? = null
     private var quote: QuoteResponse? = null
@@ -82,49 +78,29 @@ class ViewStockPresenter @Inject constructor(private var database: DatabaseManag
             .fetch()
     }
 
-    private fun itemInWatchList(company: Company) : Boolean {
-        val box: Box<WatchListItem> = (database as AppDatabaseManager).boxStore.boxFor()
-        return box.query()
-            .equal(WatchListItem_.name, company.name)
-            .and()
-            .equal(WatchListItem_.symbol, company.symbol)
-            .build()
-            .find().size > 0
-    }
 
     override fun addToWatchList(company: Company){
 
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                val box: Box<WatchListItem> = (database as AppDatabaseManager).boxStore.boxFor()
-                if (box.count() == 5L) {
+                if (repository.count() == 5L) {
                     launch(Dispatchers.Main) {
                         view?.onWatchListItemsExceeded()
                     }
                     return@launch
                 }
-                if (itemInWatchList(company)) {
+                if (repository.exists(company)) {
                     launch(Dispatchers.Main) {
                         view?.onItemInWatchList()
                     }
                     return@launch
                 }
-                val item =  WatchListItem(
-                    name = company.name,
-                    symbol = company.symbol,
-                    previousClose = quote?.previousClose,
-                    open = quote?.open,
-                    high = quote?.high,
-                    low = quote?.low,
-                    volume = quote?.volume,
-                    change = quote?.changePercent
-                )
-                box.put(item)
+                repository.save(company, quote)
                 launch(Dispatchers.Main){
                     view?.onItemAddedToWatchList(true)
                 }
 
-            }catch (e: Exception){
+            } catch(e: Exception) {
                 launch(Dispatchers.Main){
                     view?.onItemAddedToWatchList(false)
                 }
@@ -151,23 +127,9 @@ class ViewStockPresenter @Inject constructor(private var database: DatabaseManag
     }
 
     override fun updateIfInWatchList(company: Company){
-        if(itemInWatchList(company)){
-            GlobalScope.launch(Dispatchers.IO) {
-                val box: Box<WatchListItem> = (database as AppDatabaseManager).boxStore.boxFor()
-                val item = box.query()
-                    .equal(WatchListItem_.name, company.name)
-                    .and()
-                    .equal(WatchListItem_.symbol, company.symbol)
-                    .build()
-                    .findFirst()
-
-                item!!.previousClose = quote?.previousClose
-                item.open = quote?.open
-                item.high = quote?.high
-                item.low = quote?.low
-                item.volume = quote?.volume
-                item.change = quote?.changePercent
-                box.put(item)
+        GlobalScope.launch(Dispatchers.IO) {
+            if(repository.exists(company)){
+                repository.save(company, quote)
             }
         }
     }

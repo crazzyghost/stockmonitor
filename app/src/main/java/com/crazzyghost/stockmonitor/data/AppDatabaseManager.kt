@@ -10,10 +10,14 @@ import io.objectbox.Box
 import io.objectbox.BoxStore
 import io.objectbox.android.AndroidObjectBrowser
 import io.objectbox.kotlin.boxFor
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.lang.IndexOutOfBoundsException
 import javax.inject.Inject
 
 
-class AppDatabaseManager @Inject constructor(private var context : Context, private var executor: ThreadPoolManager): DatabaseManager {
+class AppDatabaseManager @Inject constructor(var context : Context): DatabaseManager {
 
      var boxStore: BoxStore
          private set
@@ -33,7 +37,7 @@ class AppDatabaseManager @Inject constructor(private var context : Context, priv
     }
 
     override fun setupCompanyList() {
-        executor.network().execute {
+        GlobalScope.launch (Dispatchers.IO) {
             NasdaqDownloader.download(object : NasdaqDownloader.DownloadCallback {
                 override fun onSuccess(result: String) {
                     insertCompaniesIntoDatabase(result)
@@ -51,20 +55,23 @@ class AppDatabaseManager @Inject constructor(private var context : Context, priv
         val lines = result.split("\n")
         for(n in 1 until lines.size){
             val components = lines[n].split("|")
-            companyBox.put(
-                Company(
-                    symbol = components[0],
-                    name = components[1].split("-")[0]
+            try {
+                companyBox.put(
+                    Company(
+                        symbol = components[0],
+                        name = components[1].split("-")[0]
+                    )
                 )
-            )
+            }catch (e: IndexOutOfBoundsException){
+                e.printStackTrace()
+            }
+
         }
     }
 
-    override fun addToWatchList(company: Company) {
-
+    override fun boxStore(): BoxStore {
+        return boxStore
     }
 
-    override fun removeFromWatchList(company: Company) {
 
-    }
 }

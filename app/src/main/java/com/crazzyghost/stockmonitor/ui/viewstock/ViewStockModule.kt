@@ -1,7 +1,7 @@
 package com.crazzyghost.stockmonitor.ui.viewstock
 
-import com.crazzyghost.stockmonitor.app.ThreadPoolManager
 import com.crazzyghost.stockmonitor.data.DatabaseManager
+import com.crazzyghost.stockmonitor.data.repo.WatchListRepository
 import dagger.Module
 import dagger.Provides
 
@@ -9,7 +9,12 @@ import dagger.Provides
 class ViewStockModule{
 
     @Provides
-    fun presenter(database: DatabaseManager) : ViewStockContract.Presenter{
-        return ViewStockPresenter(database)
+    fun presenter(repository: WatchListRepository) : ViewStockContract.Presenter{
+        return ViewStockPresenter(repository)
+    }
+
+    @Provides
+    fun watchListRepository(database: DatabaseManager): WatchListRepository {
+        return WatchListRepository(database)
     }
 }
