@@ -1,6 +1,9 @@
 package com.crazzyghost.stockmonitor.data.repo
 
+import com.crazzyghost.alphavantage.AlphaVantage
+import com.crazzyghost.alphavantage.Fetcher
 import com.crazzyghost.alphavantage.timeseries.response.QuoteResponse
+import com.crazzyghost.alphavantage.timeseries.response.TimeSeriesResponse
 import com.crazzyghost.stockmonitor.data.DatabaseManager
 import com.crazzyghost.stockmonitor.data.models.Company
 import com.crazzyghost.stockmonitor.data.models.WatchListItem
@@ -55,4 +58,79 @@ class WatchListRepository @Inject constructor(database: DatabaseManager){
         return find(company) != null
     }
 
+    fun getQuote(
+        symbol: String?,
+        onSuccessCallback: Fetcher.SuccessCallback<QuoteResponse>,
+        onFailureCallback: Fetcher.FailureCallback
+    ) {
+
+        AlphaVantage.api()
+            .timeSeries()
+            .quote()
+            .forSymbol(symbol)
+            .onSuccess(onSuccessCallback)
+            .onFailure(onFailureCallback)
+            .fetch()
+    }
+
+    fun getDaily(
+        symbol: String?,
+        onSuccessCallback: Fetcher.SuccessCallback<TimeSeriesResponse>,
+        onFailureCallback: Fetcher.FailureCallback
+    ) {
+
+        AlphaVantage.api()
+            .timeSeries()
+            .daily()
+            .forSymbol(symbol)
+            .onSuccess(onSuccessCallback)
+            .onFailure(onFailureCallback)
+            .fetch()
+    }
+
+    fun getWeekly(
+        symbol: String?,
+        onSuccessCallback: Fetcher.SuccessCallback<TimeSeriesResponse>,
+        onFailureCallback: Fetcher.FailureCallback
+    ) {
+
+        AlphaVantage.api()
+            .timeSeries()
+            .weekly()
+            .forSymbol(symbol)
+            .onSuccess(onSuccessCallback)
+            .onFailure(onFailureCallback)
+            .fetch()
+    }
+
+    fun getMonthly(
+        symbol: String?,
+        onSuccessCallback: Fetcher.SuccessCallback<TimeSeriesResponse>,
+        onFailureCallback: Fetcher.FailureCallback
+    ) {
+
+        AlphaVantage.api()
+            .timeSeries()
+            .monthly()
+            .forSymbol(symbol)
+            .onSuccess(onSuccessCallback)
+            .onFailure(onFailureCallback)
+            .fetch()
+    }
+
+
+    fun getIntraday(
+        symbol: String?,
+        onSuccessCallback: Fetcher.SuccessCallback<TimeSeriesResponse>,
+        onFailureCallback: Fetcher.FailureCallback
+    ) {
+
+        AlphaVantage.api()
+            .timeSeries()
+            .intraday()
+            .forSymbol(symbol)
+            .onSuccess(onSuccessCallback)
+            .onFailure(onFailureCallback)
+            .fetch()
+    }
 }

@@ -2,6 +2,7 @@ package com.crazzyghost.stockmonitor.ui.viewstock
 
 import com.crazzyghost.alphavantage.AlphaVantage
 import com.crazzyghost.alphavantage.AlphaVantageException
+import com.crazzyghost.alphavantage.Fetcher
 import com.crazzyghost.alphavantage.timeseries.response.QuoteResponse
 import com.crazzyghost.alphavantage.timeseries.response.TimeSeriesResponse
 import com.crazzyghost.stockmonitor.annotations.ActivityScope
@@ -29,53 +30,43 @@ class ViewStockPresenter @Inject constructor(
     }
 
     override fun fetchQuote(symbol: String?) {
-        AlphaVantage.api()
-            .timeSeries()
-            .quote()
-            .forSymbol(symbol)
-            .onSuccess { r -> onQuoteResponse(r as QuoteResponse)}
-            .onFailure { e -> onError(e) }
-            .fetch()
+        repository.getQuote(
+            symbol,
+            Fetcher.SuccessCallback { r -> onQuoteResponse(r) },
+            Fetcher.FailureCallback { e -> onError(e) }
+        )
     }
 
     override fun fetchDaily(symbol: String?) {
-        AlphaVantage.api()
-            .timeSeries()
-            .daily()
-            .forSymbol(symbol)
-            .onSuccess { r -> onTimeSeriesResponse(r as TimeSeriesResponse)}
-            .onFailure { e -> onError(e) }
-            .fetch()
+        repository.getDaily(
+            symbol,
+            Fetcher.SuccessCallback { r -> onTimeSeriesResponse(r) },
+            Fetcher.FailureCallback { e -> onError(e) }
+        )
     }
 
     override fun fetchWeekly(symbol: String?) {
-        AlphaVantage.api()
-            .timeSeries()
-            .weekly()
-            .forSymbol(symbol)
-            .onSuccess { r -> onTimeSeriesResponse(r as TimeSeriesResponse)}
-            .onFailure { e -> onError(e) }
-            .fetch()
+        repository.getWeekly(
+            symbol,
+            Fetcher.SuccessCallback { r -> onTimeSeriesResponse(r) },
+            Fetcher.FailureCallback { e -> onError(e) }
+        )
     }
 
     override fun fetchMonthly(symbol: String?) {
-        AlphaVantage.api()
-            .timeSeries()
-            .monthly()
-            .forSymbol(symbol)
-            .onSuccess { r -> onTimeSeriesResponse(r as TimeSeriesResponse)}
-            .onFailure { e -> onError(e) }
-            .fetch()
+        repository.getMonthly(
+            symbol,
+            Fetcher.SuccessCallback { r -> onTimeSeriesResponse(r) },
+            Fetcher.FailureCallback { e -> onError(e) }
+        )
     }
 
     override fun fetchIntraday(symbol: String?) {
-        AlphaVantage.api()
-            .timeSeries()
-            .intraday()
-            .forSymbol(symbol)
-            .onSuccess { r -> onTimeSeriesResponse(r as TimeSeriesResponse)}
-            .onFailure { e -> onError(e) }
-            .fetch()
+        repository.getIntraday(
+            symbol,
+            Fetcher.SuccessCallback { r -> onTimeSeriesResponse(r) },
+            Fetcher.FailureCallback { e -> onError(e) }
+        )
     }
 
 
