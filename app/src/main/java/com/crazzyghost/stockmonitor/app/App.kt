@@ -36,7 +36,7 @@ class App : Application() {
 
         val config = Config.Builder()
             .httpClient(client)
-            .key("LNBH7P408KOXUUUD")
+            .key("DEMOAPIK3Y")
             .build()
 
         AlphaVantage.api().init(config)
