@@ -12,7 +12,7 @@ Sample Android app using the [alphavantage-java] wrapper. Allows you to monitor 
 - Obtain an API key from [here](https://www.alphavantage.co/support/#api-key).
 - Clone/download the repo
 - Import the project into Android Studio
-- Change the api key in [App.kt](https://github.com/crazzyghost/stockmonitor/blob/master/app/src/main/java/com/crazzyghost/stockmonitor/app/App.kt) with your API key
+- Change the key in [App.kt](https://github.com/crazzyghost/stockmonitor/blob/master/app/src/main/java/com/crazzyghost/stockmonitor/app/App.kt) with your API key
 - Run the project
 
 
