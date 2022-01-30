@@ -5,14 +5,13 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.crazzyghost.stockmonitor.R
 import com.crazzyghost.stockmonitor.adapter.CompanyListAdapter
-import com.crazzyghost.stockmonitor.app.App
 import com.crazzyghost.stockmonitor.data.models.Company
+import com.crazzyghost.stockmonitor.mvp.BaseMvpActivity
 import com.crazzyghost.stockmonitor.ui.viewstock.ViewStock
 import com.crazzyghost.stockmonitor.util.ClickListener
 import com.crazzyghost.stockmonitor.util.Constants
@@ -28,34 +27,27 @@ import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 
-class Search : AppCompatActivity(), SearchContract.View, CoroutineScope {
+class Search : BaseMvpActivity<SearchContract.View>(), SearchContract.View, CoroutineScope {
 
     @Inject
     lateinit var presenter: SearchContract.Presenter
-    lateinit var component: SearchComponent
+
     lateinit var viewAdapter: CompanyListAdapter
     lateinit var viewManager: LinearLayoutManager
     lateinit var viewAnimator: RecyclerView.ItemAnimator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initUI()
+    }
+
+    override fun getViewPresenter(): SearchContract.Presenter {
+        return presenter
+    }
+
+    override fun initUI(){
         setContentView(R.layout.activity_search)
-        component = (applicationContext as App).component.searchComponent().create()
-        component.inject(this)
-        initUi()
-    }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.attach(this)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        presenter.drop()
-    }
-
-    private fun initUi(){
         viewAdapter = CompanyListAdapter(presenter.getCompanies())
         viewManager = LinearLayoutManager(this, RecyclerView.VERTICAL ,false)
         viewAnimator = DefaultItemAnimator()

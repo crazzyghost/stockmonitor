@@ -4,12 +4,11 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View.GONE
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.crazzyghost.alphavantage.timeseries.response.QuoteResponse
 import com.crazzyghost.alphavantage.timeseries.response.TimeSeriesResponse
 import com.crazzyghost.stockmonitor.R
-import com.crazzyghost.stockmonitor.app.App
 import com.crazzyghost.stockmonitor.data.models.Company
+import com.crazzyghost.stockmonitor.mvp.BaseMvpActivity
 import com.crazzyghost.stockmonitor.util.Constants.EXTRA_STOCK_NAME
 import com.crazzyghost.stockmonitor.util.Constants.EXTRA_STOCK_SYMBOL
 import com.github.mikephil.charting.data.Entry
@@ -20,26 +19,24 @@ import java.text.DecimalFormat
 import javax.inject.Inject
 
 
-class ViewStock : AppCompatActivity(), ViewStockContract.View {
+class ViewStock : BaseMvpActivity<ViewStockContract.View>(), ViewStockContract.View {
 
     @Inject
     lateinit var presenter: ViewStockContract.Presenter
-    lateinit var component: ViewStockComponent
     var name: String? = ""
     var symbol: String? = ""
     private val fmt = DecimalFormat("#,##0.00")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_view_stock)
-        component = (applicationContext as App).component.viewStockComponent().create()
-        component.inject(this)
-        name = intent.getStringExtra(EXTRA_STOCK_NAME)
-        symbol = intent.getStringExtra(EXTRA_STOCK_SYMBOL)
-        initUi()
+        initUI()
     }
 
-    private fun initUi(){
+    override fun initUI(){
+        setContentView(R.layout.activity_view_stock)
+        name = intent.getStringExtra(EXTRA_STOCK_NAME)
+        symbol = intent.getStringExtra(EXTRA_STOCK_SYMBOL)
+
         presenter.fetchIntraday(symbol)
         presenter.fetchQuote(symbol)
 
@@ -66,14 +63,8 @@ class ViewStock : AppCompatActivity(), ViewStockContract.View {
         backBtn.setOnClickListener { finish() }
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.attach(this)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        presenter.drop()
+    override fun getViewPresenter(): ViewStockContract.Presenter {
+        return presenter
     }
 
     override fun onQuoteResult(response: QuoteResponse) {

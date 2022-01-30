@@ -1,6 +1,6 @@
 package com.crazzyghost.stockmonitor.mvp
 
-interface BasePresenter<T> {
-    fun attach(view: T)
+interface BasePresenter<in View> {
+    fun attach(view: View)
     fun drop()
 }

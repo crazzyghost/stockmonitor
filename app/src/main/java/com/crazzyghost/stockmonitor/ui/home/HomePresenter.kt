@@ -1,6 +1,6 @@
 package com.crazzyghost.stockmonitor.ui.home
 
-import com.crazzyghost.stockmonitor.annotations.ActivityScope
+import com.crazzyghost.stockmonitor.di.ActivityScope
 import com.crazzyghost.stockmonitor.data.models.WatchListItem
 import com.crazzyghost.stockmonitor.data.repo.WatchListRepository
 import kotlinx.coroutines.Dispatchers

@@ -1,11 +1,10 @@
 package com.crazzyghost.stockmonitor.ui.viewstock
 
-import com.crazzyghost.alphavantage.AlphaVantage
 import com.crazzyghost.alphavantage.AlphaVantageException
 import com.crazzyghost.alphavantage.Fetcher
 import com.crazzyghost.alphavantage.timeseries.response.QuoteResponse
 import com.crazzyghost.alphavantage.timeseries.response.TimeSeriesResponse
-import com.crazzyghost.stockmonitor.annotations.ActivityScope
+import com.crazzyghost.stockmonitor.di.ActivityScope
 import com.crazzyghost.stockmonitor.data.models.Company
 import com.crazzyghost.stockmonitor.data.repo.WatchListRepository
 import kotlinx.coroutines.Dispatchers

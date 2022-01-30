@@ -1,22 +1,22 @@
 package com.crazzyghost.stockmonitor.app
 
-import android.app.Application
 import android.content.Context
-import com.crazzyghost.stockmonitor.annotations.ApplicationContext
 import com.crazzyghost.stockmonitor.data.AppDatabaseManager
 import com.crazzyghost.stockmonitor.data.DatabaseManager
+import com.crazzyghost.stockmonitor.di.ActivityModule
+import com.crazzyghost.stockmonitor.di.ApplicationContext
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module
-class AppModule constructor(private val app: Application){
+@Module(includes = [ActivityModule::class])
+class AppModule constructor(private val context: Context){
 
 
     @Provides
     @Singleton
     @ApplicationContext
-    fun provideContext(): Context = app.applicationContext
+    fun provideContext(): Context = context
 
     @Provides
     @Singleton
