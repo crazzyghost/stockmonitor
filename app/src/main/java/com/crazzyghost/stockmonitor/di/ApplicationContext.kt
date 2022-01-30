@@ -1,4 +1,4 @@
-package com.crazzyghost.stockmonitor.annotations
+package com.crazzyghost.stockmonitor.di
 
 import javax.inject.Qualifier
 import javax.inject.Scope

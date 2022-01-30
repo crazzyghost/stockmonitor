@@ -47,6 +47,9 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'com.github.crazzyghost:alphavantage-java:1.4.0'
     implementation "com.google.dagger:dagger:$dagger_version"
+    implementation "com.google.dagger:dagger-android:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     releaseImplementation "io.objectbox:objectbox-android:$objectbox_version"
     kapt "io.objectbox:objectbox-processor:$objectbox_version"

@@ -61,7 +61,7 @@ class AppDatabaseManager @Inject constructor(var context : Context): DatabaseMan
                     )
                 )
             }catch (e: IndexOutOfBoundsException){
-                e.printStackTrace()
+//                e.printStackTrace()
             }
 
         }

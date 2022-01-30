@@ -6,7 +6,7 @@ import com.crazzyghost.stockmonitor.mvp.BaseView
 
 interface HomeContract {
 
-    interface Presenter : BasePresenter<View>{
+    interface Presenter : BasePresenter<View> {
 
         fun getWatchListItems()
         fun deleteItem(item: WatchListItem, adapterPosition: Int)

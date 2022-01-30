@@ -1,15 +1,8 @@
 package com.crazzyghost.stockmonitor.ui.search
 
-import android.util.Log
-import com.crazzyghost.stockmonitor.annotations.ActivityScope
-import com.crazzyghost.stockmonitor.data.AppDatabaseManager
-import com.crazzyghost.stockmonitor.data.DatabaseManager
+import com.crazzyghost.stockmonitor.di.ActivityScope
 import com.crazzyghost.stockmonitor.data.models.Company
-import com.crazzyghost.stockmonitor.data.models.Company_
 import com.crazzyghost.stockmonitor.data.repo.CompanyRepository
-import io.objectbox.Box
-import io.objectbox.kotlin.boxFor
-import io.objectbox.kotlin.query
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
